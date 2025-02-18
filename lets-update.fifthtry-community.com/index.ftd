@@ -1,0 +1,15 @@
+-- ds.site-page: lets-update - A social updates app for your or your companies site
+
+-- ds.heading-large: `lets-update`: A social updates app for your or your companies site
+
+
+-- ds.heading-medium: Open Source
+
+This project is licensed under [BSD-3 license][1]. You can find our source code
+on [fifthtry-community/lets-update][2] on Github.
+
+[1]: https://github.com/fifthtry-community/lets-update/blob/main/LICENSE
+[2]: https://github.com/fifthtry-community/lets-update
+
+
+-- end: ds.site-page

@@ -1,0 +1,15 @@
+-- import: fastn
+
+-- fastn.package: lets-update.fifthtry.site
+system: lets-update
+system-is-confidential: false
+
+-- fastn.dependency: design-system.fifthtry.site
+-- fastn.dependency: lets-auth.fifthtry.site
+
+;; this is a system: alias must be ds
+-- fastn.auto-import: design-system.fifthtry.site as ds
+;; this is a system: alias must be lets-auth
+-- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
+;; this is a system: alias must be lets-update
+-- fastn.auto-import: lets-update.fifthtry.site as lets-update

@@ -1,0 +1,2 @@
+-- ds.heading-medium: update page
+link: $ftd.app-url(path=/, app=lets-update)

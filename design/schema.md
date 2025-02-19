@@ -1,22 +1,12 @@
--- import: fastn
+# Schema
 
--- fastn.package: lets-update.fifthtry.site
-system: lets-update
-system-is-confidential: false
+This app assumes every domain is a single user domain. This means for companies
+and other orgs, the `cdp_feed` table should not be used. Orgs can create updates
+so the `cdp_update` table should be used.
 
--- fastn.dependency: design-system.fifthtry.site
--- fastn.dependency: lets-auth.fifthtry.site
+## cdp_feed
 
-;; this is a system: alias must be ds
--- fastn.auto-import: design-system.fifthtry.site as ds
-;; this is a system: alias must be lets-auth
--- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
-;; this is a system: alias must be lets-update
--- fastn.auto-import: lets-update.fifthtry.site as lets-update
-
-
--- fastn.migration: 0001-initial-migration
-
+```sql
 CREATE TABLE cdp_feed (
     id INTEGER PRIMARY KEY,
     update_id INTEGER NOT NULL, -- ID of the corresponding update
@@ -25,16 +15,19 @@ CREATE TABLE cdp_feed (
     content_type TEXT NOT NULL, -- Type of content (text, quote, link, review, testimonial, greeting, photo, video, workout, etc.)
     content TEXT NOT NULL, -- JSON field to store the content of the update
     links TEXT, -- JSON field to store links for media posts
-    tags TEXT, -- JSON list of tags
-    my_tags TEXT, -- JSON: list of tags added by the user
+    tags TEXT, -- JSON: Comma-separated list of tags
+    my_tags TEXT, -- JSON: Comma-separated list of tags added by the user
     created_at INTEGER NOT NULL, -- Timestamp of post creation
     updated_at INTEGER NOT NULL, -- Timestamp of last update
     read INTEGER DEFAULT 0 NOT NULL, -- Read/unread status of the update
     archived INTEGER DEFAULT 0 NOT NULL, -- archived stuff dont show up in the feed
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 ) STRICT;
+```
 
+## cdp_update
 
+```sql
 CREATE TABLE cdp_update (
     id INTEGER PRIMARY KEY,
     content_type TEXT NOT NULL, -- Type of content (text, quote, link, review, testimonial, greeting, photo, video, workout, etc.)
@@ -48,3 +41,4 @@ CREATE TABLE cdp_update (
     FOREIGN KEY (reply_to) REFERENCES cdp_feed(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 );
+```

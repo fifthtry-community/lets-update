@@ -1,0 +1,19 @@
+# Server to Server Protocol
+
+How can one server, say `foo.com` authenticate itself to `bar.com`? Say if 
+`foo.com` has to post some JSON to `bar.com`, it can make a HTTP request to 
+`bar.com`, but how does `bar.com` know that the request is really coming from 
+`foo.com`? One option is cryptography, e.g., public private keys, but storing 
+keys is risky if someone steals the keys they have too much access, etc. 
+Another option is oauth like auth tokens.
+
+The third option is server to server protocol.
+
+This is how it will work, `foo.com` will generate a one time `guid`, and store 
+it in a table, and then call `bar.com` saying hey, take this `guid`, and call me 
+back on `foo.com`. Now `bar.com` does not know if the request really came from 
+`foo.com`, but its okay, `bar.com` will initiate a request to `foo.com`, with 
+the `guid`. If `foo.com` is the one that initiated the handshake, it will have 
+the `guid` in the table, and it will reply with the JSON it want to deliver to 
+`bar.com`. If it was some random person trying to spam `bar.com`, `bar.com` 
+will either block `foo.com`, or will throttle it somehow.

@@ -4,6 +4,8 @@
 
 Package: `lets-update.fifthtry.site`
 
+[Design Docs](/design/)
+
 Template: `lets-update-template.fifthtry.site` (TODO: create site button here)
 
 -- ds.heading-medium: Adding Lets Update App To Your Existing `fastn` Site

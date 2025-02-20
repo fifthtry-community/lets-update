@@ -21,31 +21,23 @@ function popd2() {
 
 
 function build-wasm() {
-    pushd2 "${PROJ_ROOT}/backend" || return 1
-    # cargo clean
-    cargo build --target wasm32-unknown-unknown --release || return 1
-    cp ../target/wasm32-unknown-unknown/release/backend.wasm . || return 1
+    pushd2 "${PROJ_ROOT}" || return 1
+    sh ./scripts/build-wasm.sh || return 1
     popd2
 }
 
-function dotcom() {
-  build-email-wasm || return 1
-  pushd2 "${PROJ_ROOT}" || return 1
-  cp ./email-auth-provider/email_auth_provider.wasm ../dotcom/frontend/email_auth.wasm || return 1
-  popd2
-}
 
 
 function update-ui() {
-  pushd2 "${PROJ_ROOT}/lets-auth.fifthtry.site" || return 1
+  pushd2 "${PROJ_ROOT}/lets-update.fifthtry.site" || return 1
   $FASTN update
   popd2
 }
 
 function run-ui() {
-  pushd2 "${PROJ_ROOT}/lets-auth.fifthtry.site" || return 1
+  pushd2 "${PROJ_ROOT}/lets-update.fifthtry.site" || return 1
 
-  echo "Using $FASTN to serve lets-auth.fifthtry.site/"
+  echo "Using $FASTN to serve lets-update.fifthtry.site/"
 
   $FASTN --trace serve --port 8002 --offline || echo "fastn failed, ensure its installed, and also consider running update-ui"
 
@@ -53,15 +45,15 @@ function run-ui() {
 }
 
 function update-www() {
-  pushd2 "${PROJ_ROOT}/lets-auth.fifthtry-community.com" || return 1
+  pushd2 "${PROJ_ROOT}/lets-update.fifthtry-community.com" || return 1
   $FASTN update
   popd2
 }
 
 function run-www() {
-  pushd2 "${PROJ_ROOT}/lets-auth.fifthtry-community.com" || return 1
+  pushd2 "${PROJ_ROOT}/lets-update.fifthtry-community.com" || return 1
 
-  echo "Using $FASTN to serve lets-auth.fifthtry-community.com/"
+  echo "Using $FASTN to serve lets-update.fifthtry-community.com/"
 
   $FASTN --trace serve --port 8003 --offline || echo "fastn failed, ensure its installed, and also consider running update-ui"
 
@@ -69,7 +61,7 @@ function run-www() {
 }
 
 function update-template() {
-  pushd2 "${PROJ_ROOT}/lets-auth-template.fifthtry.site" || return 1
+  pushd2 "${PROJ_ROOT}/lets-update-template.fifthtry.site" || return 1
   $FASTN update
   popd2
 }
@@ -85,7 +77,7 @@ function build-wasm() {
 
 
 function run-template() {
-  pushd2 "${PROJ_ROOT}/lets-auth-template.fifthtry.site" || return 1
+  pushd2 "${PROJ_ROOT}/lets-update-template.fifthtry.site" || return 1
 
   build-wasm || return 1
   $FASTN --trace serve --offline

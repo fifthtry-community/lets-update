@@ -1,0 +1,11 @@
+-- string title: `lets-update` Design
+
+-- ds.site-page: $title
+
+-- ds.heading-large: $title
+
+- [Database Schema](/design/schema/)
+- [Server To Server Protocol](/design/server-to-server/)
+- [Initial Prompts](/design/initial-prompts/)
+
+-- end: ds.site-page

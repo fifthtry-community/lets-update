@@ -1,4 +1,8 @@
-# Server to Server Protocol
+-- string title: Server to Server Protocol
+
+-- ds.site-page: $title
+
+-- ds.heading-large: $title
 
 How can one server, say `foo.com` authenticate itself to `bar.com`? Say if 
 `foo.com` has to post some JSON to `bar.com`, it can make a HTTP request to 
@@ -17,3 +21,5 @@ the `guid`. If `foo.com` is the one that initiated the handshake, it will have
 the `guid` in the table, and it will reply with the JSON it want to deliver to 
 `bar.com`. If it was some random person trying to spam `bar.com`, `bar.com` 
 will either block `foo.com`, or will throttle it somehow.
+
+-- end: ds.site-page

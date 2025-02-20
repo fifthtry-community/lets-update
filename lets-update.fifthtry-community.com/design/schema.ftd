@@ -38,6 +38,7 @@ CREATE TABLE cdp_update (
     updated_at INTEGER NOT NULL, -- Timestamp of last update
     reply_to INTEGER NULL, -- ID of the post this post is replying to (foreign key to cdp_feed)
     user_id INTEGER NOT NULL, -- Foreign key to the user who created the update
+    is_public INTEGER DEFAULT 0 NOT NULL, -- Public/private status of the update
     FOREIGN KEY (reply_to) REFERENCES cdp_feed(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 );

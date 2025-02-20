@@ -9,13 +9,17 @@ system-is-confidential: false
 
 ;; this is a system: alias must be ds
 -- fastn.auto-import: design-system.fifthtry.site as ds
+
 ;; this is a system: alias must be lets-auth
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
+
 ;; this is a system: alias must be lets-update
 -- fastn.auto-import: lets-update.fifthtry.site as lets-update
 
 
 -- fastn.migration: 0001-initial-migration
+
+;; https://lets-update.fifthtry-community.com/design/schema/
 
 CREATE TABLE cdp_feed (
     id INTEGER PRIMARY KEY,
@@ -45,6 +49,7 @@ CREATE TABLE cdp_update (
     updated_at INTEGER NOT NULL, -- Timestamp of last update
     reply_to INTEGER NULL, -- ID of the post this post is replying to (foreign key to cdp_feed)
     user_id INTEGER NOT NULL, -- Foreign key to the user who created the update
+    is_public INTEGER DEFAULT 0 NOT NULL, -- Public/private status of the update
     FOREIGN KEY (reply_to) REFERENCES cdp_feed(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 );

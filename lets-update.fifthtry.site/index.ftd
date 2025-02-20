@@ -1,9 +1,22 @@
--- string site-name: Hello
+-- import: fastn/processors as pr
+
+-- boolean feed-enabled: $lets-auth.is-personal-site
+
+-- integer from: 0
+$processor$: pr.request-data
+
+-- string site-name: My Updates
+
+
+;; when someone goes to their /updates/ page, they see their feed. if someone
+;; else goes to your /updates/ page, they see your updates.
+
+;; if the site is marked as an "org site" or non personal site of any kind,
+;; then again there is nothing in feed, and everyone just sees the updates from
+;; this site.
 
 -- ds.site-page: $site-name
 
 -- ds.heading-medium: $site-name
-
-
 
 -- end: ds.site-page

@@ -2,6 +2,45 @@
 
 -- ds.heading-large: `lets-update`: A social updates app for your or your companies site
 
+Package: `lets-update.fifthtry.site`
+
+Template: `lets-update-template.fifthtry.site` (TODO: create site button here)
+
+-- ds.heading-medium: Adding Lets Update App To Your Existing `fastn` Site
+
+You will have to use the `lets-auth.fifthtry.site` and
+`lets-update.fifthtry.site` packages.
+
+-- ds.code:
+lang: ftd
+
+\-- import: fastn
+
+\-- fastn.package: your-package
+
+\-- fastn.dependency: lets-auth.fifthtry.site
+\-- fastn.dependency: lets-update.fifthtry.site
+
+\;; NOTE: you MUST use this auto-import alias or things won't work
+\-- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
+
+\;; NOTE: you MUST use this auto-import alias or things won't work
+\-- fastn.auto-import: lets-update.fifthtry.site as lets-update
+
+\-- fastn.app: Lets Auth App
+mount-point: /-/auth/
+package: lets-auth.fifthtry.site
+
+
+\-- fastn.app: Lets Update App
+mount-point: /updates/
+package: lets-update.fifthtry.site
+
+-- ds.copy-regular:
+
+Note that we are "mounting" the `lets-update.fifthtry.site` package at `/updates/`
+URL. [Learn more about `fastn.app` feature in `fastn` here](https://fastn.com/app/).
+
 
 -- ds.heading-medium: Open Source
 

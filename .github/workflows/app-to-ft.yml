@@ -1,0 +1,21 @@
+name: Upload lets-update to FifthTry
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - lets-update.fifthtry.site/**
+      - backend/**
+      - scripts/*.sh
+      - .github/workflows/app-to-ft.yml
+
+
+jobs:
+  upload-to-fifthtry:
+    runs-on: ubuntu-latest
+    env:
+      FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_UPDATE }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Swatinem/rust-cache@v2
+      - run: ./scripts/publish-app.sh

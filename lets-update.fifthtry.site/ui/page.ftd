@@ -1,0 +1,55 @@
+;; all update related pages use this component as the base level page component.
+;;
+;; this page itself uses other pluggable components like update-header, so if you
+;; want to just modify the header, you do not have to overwrite this page, just
+;; the auth-header component, and this page will use your modified update-header.
+-- component update-page:
+caption title:
+optional body description:
+children content:
+
+-- ds.site-page: $update-page.title
+description: $update-page.description
+fastn-badge: false
+
+	-- ds.section-column:
+	align-content: center
+	spacing: $ds.spaces.vertical-gap.medium
+    margin: $ds.spaces.vertical-gap.zero
+
+        -- ds.heading-medium: $update-page.title
+
+        -- ds.column:
+        width.fixed.px if { ftd.device == "desktop" }: 400
+        border: $ds.borders.uniform.small
+        inset: $ds.spaces.inset-square.large
+        content: $update-page.content
+        background.solid: $ds.colors.background.step-1
+
+        -- end: ds.column
+
+	-- end: ds.section-column
+
+-- end: ds.site-page
+
+-- end: update-page
+
+
+
+
+
+
+-- component update-header:
+
+-- ds.site-header:
+
+-- end: update-header
+
+
+
+
+-- component update-footer:
+
+-- ds.site-footer:
+
+-- end: update-footer

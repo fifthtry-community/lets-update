@@ -1,0 +1,8 @@
+-- component dashboard-page:
+caption title: Dashboard
+
+-- lets-update.update-page: $dashboard-page.title
+
+-- end: lets-update.update-page
+
+-- end: dashboard-page

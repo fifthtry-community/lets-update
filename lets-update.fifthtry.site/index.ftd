@@ -2,6 +2,13 @@
 
 -- boolean feed-enabled: $lets-auth.is-personal-site
 
+-- import: lets-update.fifthtry.site/ui/dashboard as _
+export: dashboard-page
+
+-- import: lets-update.fifthtry.site/ui/page as _
+export: update-page
+
+
 -- integer from: 0
 $processor$: pr.request-data
 
@@ -15,8 +22,4 @@ $processor$: pr.request-data
 ;; then again there is nothing in feed, and everyone just sees the updates from
 ;; this site.
 
--- ds.site-page: $site-name
-
--- ds.heading-medium: $site-name
-
--- end: ds.site-page
+-- lets-update.dashboard-page:

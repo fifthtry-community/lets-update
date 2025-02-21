@@ -53,3 +53,23 @@ CREATE TABLE cdp_update (
     FOREIGN KEY (reply_to) REFERENCES cdp_feed(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 );
+
+
+CREATE TABLE cdp_update_reaction (
+    id INTEGER PRIMARY KEY,
+
+    -- ID of the corresponding update
+    update_id INTEGER NOT NULL,
+
+    -- Foreign key to the user who reacted
+    user_id INTEGER NOT NULL,
+
+    -- Type of reaction (like, love, haha, wow, sad, angry)
+    reaction TEXT NOT NULL,
+
+    -- Timestamp of reaction creation
+    created_at INTEGER NOT NULL,
+
+    FOREIGN KEY (update_id) REFERENCES cdp_update(id),
+    FOREIGN KEY (user_id) REFERENCES fastn_user(id)
+);

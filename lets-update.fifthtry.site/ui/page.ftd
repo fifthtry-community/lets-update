@@ -10,7 +10,7 @@ children content:
 
 -- ds.site-page: $update-page.title
 description: $update-page.description
-fastn-badge: false
+fastn-badge: true
 
 	-- ds.section-column:
 	align-content: center

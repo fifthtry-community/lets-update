@@ -26,3 +26,56 @@ $processor$: pr.request-data
 ;; this site.
 
 -- lets-update.dashboard-page:
+
+
+;; in future we will use enums to handle different kinds of updates, for now
+;; every update has a text, timestamp, embedded images, optional video,
+
+;; these are self updates
+-- record update-entry:
+;; every update has a unique url
+string url:
+;; some updates will have title, to be shown more prominently
+option string title:
+;; this is the body of the update, can include markdown syntax
+optional string text:
+;; if you are linking something
+optional link link:
+optional video video:
+optional string image-thumbnail:
+string created-on:
+
+
+-- record link:
+string text:
+string url:
+
+-- record video:
+;; to view the video on the native player
+string url:
+;; this is what we show
+optional string thumbnail:
+;; optional video title, can include markdown
+optional string title:
+optional string body:  ;; can include markdown
+
+
+-- record image:
+string url:
+optional string thumbnail:
+optional string title:
+optional string body:  ;; can include markdown
+
+
+
+;; should this record be here?
+-- record contact:
+string name:
+string domain:
+optional string profile-picture:
+
+
+;; these are updates from others
+-- record feed-item:
+contact from:
+update-entry entry:

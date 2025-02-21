@@ -2,8 +2,11 @@
 
 -- boolean feed-enabled: $lets-auth.is-personal-site
 
--- import: lets-update.fifthtry.site/ui/dashboard as _
-export: dashboard-page
+-- import: lets-update.fifthtry.site/ui/self as _
+export: self-page
+
+-- import: lets-update.fifthtry.site/ui/feed as _
+export: feed-page
 
 -- import: lets-update.fifthtry.site/ui/page as _
 export: update-page

@@ -11,6 +11,9 @@
 export: active-file-content, active-title, active-sub-title, submit
 
 -- optional string $active-file-preview-url: /storybook/self/
+-- string $active-title: Dashboard
+-- string $active-sub-title: For Site Owner
+
 ;;           end storybook navigate module
 
 
@@ -30,4 +33,5 @@ $processor$: pr.toc
 
 - Dashboard:
   - For Site Owner: /storybook/self/
-  - For Public
+  - For Site Owner - feed: /storybook/feed/
+  - For Public: /storybook/others/

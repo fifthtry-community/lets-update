@@ -1,0 +1,12 @@
+-- component self-page:
+boolean viewer-is-owner: false
+
+-- lets-update.update-page:
+feed-page-is-open: false
+viewer-is-owner: $self-page.viewer-is-owner
+
+-- ds.heading-medium: self updates will show up here
+
+-- end: lets-update.update-page
+
+-- end: self-page

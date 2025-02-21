@@ -4,31 +4,35 @@
 ;; want to just modify the header, you do not have to overwrite this page, just
 ;; the auth-header component, and this page will use your modified update-header.
 -- component update-page:
-caption title:
-optional body description:
+boolean viewer-is-owner:
+boolean feed-page-is-open: false
 children content:
+string updates-link: $ftd.app-url(path=/)
+string feeds-link: $ftd.app-url(path=/feed/)
 
--- ds.site-page: $update-page.title
-description: $update-page.description
+-- ds.site-page: Updates
 fastn-badge: true
 
-	-- ds.section-column:
-	align-content: center
-	spacing: $ds.spaces.vertical-gap.medium
-    margin: $ds.spaces.vertical-gap.zero
+	-- ds.section-row:
+	spacing: $ds.spaces.horizontal-gap.medium
+    inset: $ds.spaces.inset-square.medium
+    align-content: top-left
 
-        -- ds.heading-medium: $update-page.title
 
-        -- ds.column:
-        width.fixed.px if { ftd.device == "desktop" }: 400
-        border: $ds.borders.uniform.small
-        inset: $ds.spaces.inset-square.large
-        content: $update-page.content
-        background.solid: $ds.colors.background.step-1
+    -- heading-tab: My Updates
+    underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
+    link: $update-page.updates-link
 
-        -- end: ds.column
+    -- ds.heading-small: |
+    if: { update-page.viewer-is-owner }
 
-	-- end: ds.section-column
+    -- heading-tab: Feed
+    if: { update-page.viewer-is-owner }
+    link: $update-page.feeds-link
+    underline: $update-page.feed-page-is-open
+
+
+	-- end: ds.section-row
 
 -- end: ds.site-page
 
@@ -53,3 +57,21 @@ fastn-badge: true
 -- ds.site-footer:
 
 -- end: update-footer
+
+
+
+-- component heading-tab:
+caption text:
+string link:
+boolean underline: false
+
+-- ftd.text: $heading-tab.text
+width: hug-content
+color: $ds.colors.text-strong
+role: $ds.types.heading-small
+display: inline-block
+border-bottom-width.px if { heading-tab.underline }: 2
+border-color if { heading-tab.underline }: $ds.colors.text-strong
+link: $heading-tab.link
+
+-- end: heading-tab

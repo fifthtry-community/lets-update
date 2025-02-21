@@ -1,0 +1,11 @@
+-- component feed-page:
+
+-- lets-update.update-page:
+feed-page-is-open: true
+viewer-is-owner: true
+
+-- ds.heading-medium: feed will show up here
+
+-- end: lets-update.update-page
+
+-- end: feed-page

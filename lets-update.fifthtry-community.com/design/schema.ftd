@@ -8,6 +8,19 @@ This app assumes every domain is a single user domain. This means for companies
 and other orgs, the `cdp_feed` table should not be used. Orgs can create updates
 so the `cdp_update` table should be used.
 
+
+
+-- ds.heading-medium: Note on `domain`
+
+We are going to use the word domain in context of `lets-update` app. A domain is
+either a domain, e.g., `amitu.com`, or sub domain, e.g., `amitu.fifthtry.site`.
+We will be using the word `domain` to mean either, or even `sub-sub-domain` etc.
+
+
+-- ds.heading-medium: TODO: JSON Schemas
+
+We have to write down JSON schema for all the JSON fields mentions here.
+
 -- ds.heading-medium: `cdp_feed` Table
 
 -- ds.code:
@@ -18,9 +31,9 @@ CREATE TABLE cdp_feed (
 
     \-- Foreign key to the user who created the update. the only way to create
     \-- updates in our network is by owning a (sub)domain, so the updates are
-    \-- really coming from a (sub)domain, and not by user. But the main way to
-    \-- authenticate yourself is server to server, for this user-id in our table
-    \-- the (sub)domain key will be set.
+    \-- really coming from a (sub)domain, and not by user. But the supported way
+    \-- to authenticate yourself is server to server, for this user-id in our
+    \-- table the (sub)domain key will be set.
     user_id INTEGER NOT NULL,
 
     \-- ID of the corresponding update
@@ -84,6 +97,9 @@ CREATE TABLE cdp_feed (
 ) STRICT;
 
 
+
+
+
 -- ds.heading-medium: `cdp_update` Table
 
 -- ds.code:
@@ -134,9 +150,12 @@ CREATE TABLE cdp_update (
     is_public INTEGER DEFAULT 0 NOT NULL,
 
     FOREIGN KEY (reply_to) REFERENCES cdp_feed(id),
-
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 );
+
+
+
+
 
 
 -- ds.heading-medium: `cdp_update_reaction` Table
@@ -152,7 +171,9 @@ lang: sql
 CREATE TABLE cdp_update_reaction (
     id INTEGER PRIMARY KEY,
 
-    \-- ID of the corresponding update
+    \-- ID of the corresponding update. we only store reactions for our updates,
+    \-- so we do not need to store the `guid` here, this allows us to use
+    \-- foreign key constraints. also INTEGER is faster/smaller than TEXT.
     update_id INTEGER NOT NULL,
 
     \-- Foreign key to the user who reacted. the person who is reacting may not
@@ -161,14 +182,17 @@ CREATE TABLE cdp_update_reaction (
     \-- the only identifier we have is email, and we can't show email to others.
     user_id INTEGER NOT NULL,
 
-    \-- Type of reaction (like, love, haha, wow, sad, angry)
-    reaction_type TEXT NOT NULL,
+    \-- JSON: reaction data (like, love, haha, wow, sad, angry).
+    reaction TEXT NOT NULL,
 
     \-- Timestamp of reaction
     created_at INTEGER NOT NULL,
 
+    \-- Timestamp of reaction
+    updated_at INTEGER NOT NULL,
+
     FOREIGN KEY (update_id) REFERENCES cdp_update(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
-);
+) STRICT;
 
 -- end: ds.site-page

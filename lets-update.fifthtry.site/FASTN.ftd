@@ -23,33 +23,119 @@ system-is-confidential: false
 
 CREATE TABLE cdp_feed (
     id INTEGER PRIMARY KEY,
-    update_id INTEGER NOT NULL, -- ID of the corresponding update
-    update_source TEXT NOT NULL, -- Type of update source (e.g., Instagram, GitHub, Twitter, etc.)
-    user_id INTEGER NOT NULL, -- Foreign key to the user who created the update
-    content_type TEXT NOT NULL, -- Type of content (text, quote, link, review, testimonial, greeting, photo, video, workout, etc.)
-    content TEXT NOT NULL, -- JSON field to store the content of the update
-    links TEXT, -- JSON field to store links for media posts
-    tags TEXT, -- JSON list of tags
-    my_tags TEXT, -- JSON: list of tags added by the user
-    created_at INTEGER NOT NULL, -- Timestamp of post creation
-    updated_at INTEGER NOT NULL, -- Timestamp of last update
-    read INTEGER DEFAULT 0 NOT NULL, -- Read/unread status of the update
-    archived INTEGER DEFAULT 0 NOT NULL, -- archived stuff dont show up in the feed
+
+    -- Foreign key to the user who created the update. the only way to create
+    -- updates in our network is by owning a (sub)domain, so the updates are
+    -- really coming from a (sub)domain, and not by user. But the supported way
+    -- to authenticate yourself is server to server, for this user-id in our
+    -- table the (sub)domain key will be set.
+    user_id INTEGER NOT NULL,
+
+    -- ID of the corresponding update
+    --
+    -- this update id is computed by the person from where we got the update
+    -- from, not by us.
+    update_guid TEXT NOT NULL,
+
+    -- Type of update source (e.g., Instagram, GitHub, Twitter, etc.). This is
+    -- like the application name that is sending the update.
+    source_app TEXT NOT NULL,
+
+    -- Type of content (text, quote, link, review, testimonial, greeting,
+    -- photo, video, workout, etc.)
+    --
+    -- can one app create updates of more than one content_type? yes.
+    --
+    -- we will have standard content types, but we will also allow app specific
+    -- content types.
+    content_type TEXT NOT NULL,
+
+    -- JSON field to store the content of the update
+    content TEXT NOT NULL,
+
+    -- JSON field to store links for media posts. we will support standard
+    -- attachments, like links, image, video etc, but it can also contain
+    -- other content-type (e.g., a task content type may link a document
+    -- content type).
+    links TEXT,
+
+    -- JSON: list of tags
+    tags TEXT,
+
+    -- json: reactions. this is the summary of reactions this update has got.
+    -- the original server will share this with us, and we will store it as is.
+    -- the reactions will be summaries, and not entire reactions, so if we are
+    -- interested in anything, we will have to fetch the reactions from the
+    -- original server.
+    reactions TEXT,
+
+    -- JSON: tags or notes added on any update. these can be shared with the
+    -- original, or it can be private to me, depending on the way reaction
+    -- was created.
+    my_reactions TEXT,
+
+    -- Timestamp of post creation
+    created_at INTEGER NOT NULL,
+
+    -- Timestamp of last update
+    updated_at INTEGER NOT NULL,
+
+    -- Read/unread status of the update, this can be managed via my_reactions
+    -- also, so why is this a field?
+    read INTEGER DEFAULT 0 NOT NULL,
+
+    -- archived stuff dont show up in the feed, this can be managed via
+    -- my_reactions also, so why is this a field?
+    archived INTEGER DEFAULT 0 NOT NULL,
+
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 ) STRICT;
 
 
 CREATE TABLE cdp_update (
     id INTEGER PRIMARY KEY,
-    content_type TEXT NOT NULL, -- Type of content (text, quote, link, review, testimonial, greeting, photo, video, workout, etc.)
-    content TEXT, -- JSON field to store the content of the update
-    links TEXT, -- JSON field to store links for media posts
-    tags TEXT, -- JSON: list of tags
-    created_at INTEGER NOT NULL, -- Timestamp of post creation
-    updated_at INTEGER NOT NULL, -- Timestamp of last update
-    reply_to INTEGER NULL, -- ID of the post this post is replying to (foreign key to cdp_feed)
-    user_id INTEGER NOT NULL, -- Foreign key to the user who created the update
-    is_public INTEGER DEFAULT 0 NOT NULL, -- Public/private status of the update
+
+    -- this is the id other people see, this is some random string, length: 32.
+    --
+    -- we use Guid.NewGuid().ToString("N") = 32 characters (Digits and Letters
+    -- only, no braces nor hyphens) e.g.: 12345678123412341234123456789abc
+    --
+    -- why non hyphenated? because we can use this as a URL slug, and hyphens
+    -- make it multiple words, meaning if you want to delete the "guid" part
+    -- from the URL, you have to press `Option-Backspace` multiple times.
+    guid TEXT UNIQUE NOT NULL,
+
+    -- Type of content (text, quote, link, review, testimonial, greeting,
+    -- photo, video, workout, etc.)
+    content_type TEXT NOT NULL,
+
+    -- JSON field to store the content of the update
+    content TEXT,
+
+    -- JSON field to store links for media posts
+    links TEXT,
+
+    -- JSON: list of tags, some would be private, and some public, depending
+    -- on the way tags are created.
+    tags TEXT,
+
+    -- Timestamp of post creation
+    created_at INTEGER NOT NULL,
+
+    -- Timestamp of last update
+    updated_at INTEGER NOT NULL,
+
+    -- ID of the post this post is replying to (foreign key to cdp_feed)
+    reply_to INTEGER NULL,
+
+    -- Foreign key to the user who created the update
+    user_id INTEGER NOT NULL,
+
+    -- Public/private status of the update. public means visible to everyone,
+    -- without account. private means only with people I explicitly share, via
+    -- tags etc.
+    is_public INTEGER DEFAULT 0 NOT NULL,
+
     FOREIGN KEY (reply_to) REFERENCES cdp_feed(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
 );
@@ -58,18 +144,26 @@ CREATE TABLE cdp_update (
 CREATE TABLE cdp_update_reaction (
     id INTEGER PRIMARY KEY,
 
-    -- ID of the corresponding update
+    -- ID of the corresponding update. we only store reactions for our updates,
+    -- so we do not need to store the `guid` here, this allows us to use
+    -- foreign key constraints. also INTEGER is faster/smaller than TEXT.
     update_id INTEGER NOT NULL,
 
-    -- Foreign key to the user who reacted
+    -- Foreign key to the user who reacted. the person who is reacting may not
+    -- have a domain. do we allow people who login via gmail / email etc to
+    -- react? if we do then we have more reactions, but we can't show them, as
+    -- the only identifier we have is email, and we can't show email to others.
     user_id INTEGER NOT NULL,
 
-    -- Type of reaction (like, love, haha, wow, sad, angry)
+    -- JSON: reaction data (like, love, haha, wow, sad, angry).
     reaction TEXT NOT NULL,
 
-    -- Timestamp of reaction creation
+    -- Timestamp of reaction
     created_at INTEGER NOT NULL,
+
+    -- Timestamp of reaction
+    updated_at INTEGER NOT NULL,
 
     FOREIGN KEY (update_id) REFERENCES cdp_update(id),
     FOREIGN KEY (user_id) REFERENCES fastn_user(id)
-);
+) STRICT;

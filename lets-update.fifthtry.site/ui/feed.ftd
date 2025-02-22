@@ -1,11 +1,26 @@
 -- component feed-page:
+lets-update.feed-item list items:
+;; if user has searched for something, the items are search results
+optional string search:
+;; if user has searched something, clicking on this clears the search
+optional string clear-search-url:
+string updates-url: $ftd.app-url(path=/)
+string feed-url: $ftd.app-url(path=/feed/)
+;; if there are more results to show, next and previous page urls are provided
+optional string next-page-url:
+optional string previous-page-url:
+
 
 -- lets-update.update-page:
 feed-page-is-open: true
 viewer-is-owner: true
+feed-url: $feed-page.feed-url
+updates-url: $feed-page.updates-url
 
 -- ds.heading-medium: feed will show up here
 
 -- end: lets-update.update-page
+
+
 
 -- end: feed-page

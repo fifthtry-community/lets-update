@@ -7,8 +7,8 @@
 boolean viewer-is-owner:
 boolean feed-page-is-open: false
 children content:
-string updates-link: $ftd.app-url(path=/)
-string feeds-link: $ftd.app-url(path=/feed/)
+string updates-url: $ftd.app-url(path=/)
+string feed-url: $ftd.app-url(path=/feed/)
 
 -- ds.site-page: Updates
 fastn-badge: true
@@ -21,14 +21,14 @@ fastn-badge: true
 
     -- heading-tab: My Updates
     underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
-    link: $update-page.updates-link
+    link: $update-page.updates-url
 
     -- ds.heading-small: |
     if: { update-page.viewer-is-owner }
 
     -- heading-tab: Feed
     if: { update-page.viewer-is-owner }
-    link: $update-page.feeds-link
+    link: $update-page.feed-url
     underline: $update-page.feed-page-is-open
 
 

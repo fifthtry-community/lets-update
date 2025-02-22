@@ -34,7 +34,7 @@ $processor$: pr.request-data
 ;; every update has a unique url
 string permalink:
 ;; some updates will have title, to be shown more prominently
-option string title:
+optional string title:
 ;; this is the body of the update, can include markdown syntax
 optional string text:
 ;; if you are linking to something

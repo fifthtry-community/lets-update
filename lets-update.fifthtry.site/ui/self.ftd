@@ -1,9 +1,20 @@
 -- component self-page:
+lets-update.update list updates:
 boolean viewer-is-owner: false
+string updates-url: $ftd.app-url(path=/)
+string feed-url: $ftd.app-url(path=/feed/)
+optional string search:
+;; if user has searched something, clicking on this clears the search
+optional string clear-search-url:
+;; if there are more results to show, next and previous page urls are provided
+optional string next-page-url:
+optional string previous-page-url:
 
 -- lets-update.update-page:
 feed-page-is-open: false
 viewer-is-owner: $self-page.viewer-is-owner
+feed-url: $self-page.feed-url
+updates-url: $self-page.updates-url
 
 -- ds.heading-medium: self updates will show up here
 

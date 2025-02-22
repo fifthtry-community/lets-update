@@ -25,57 +25,61 @@ $processor$: pr.request-data
 ;; then again there is nothing in feed, and everyone just sees the updates from
 ;; this site.
 
--- lets-update.dashboard-page:
-
 
 ;; in future we will use enums to handle different kinds of updates, for now
 ;; every update has a text, timestamp, embedded images, optional video,
 
 ;; these are self updates
--- record update-entry:
+-- record update:
 ;; every update has a unique url
-string url:
+string permalink:
 ;; some updates will have title, to be shown more prominently
 option string title:
 ;; this is the body of the update, can include markdown syntax
 optional string text:
-;; if you are linking something
-optional link link:
-optional video video:
-optional string image-thumbnail:
+;; if you are linking to something
+optional lets-update.link link:
+;; in case of image the title/sub-title/body provides enough information for alt text
+optional lets-update.link image:
+optional lets-update.video video:
+string list tags:
+integer likes:
+integer comments:
 string created-on:
 
 
+
+
+;; for links we are trying to follow social media preview card format
 -- record link:
-string text:
-string url:
+string url: ;; e.g., https://fifthtry.com/blog/lets-talk/
+string title: ;; e.g., Launching Let's Talk
+optional string sub-title: ;; e.g., FifthTry Blog
+optional string thumbnail: ;; e.g., https://fifthtry.com/blog/lets-talk/thumbnail.jpg
+optional string body: ;; e.g., Talk to people on the domain you own
+
+
+
+
 
 -- record video:
-;; to view the video on the native player
-string url:
-;; this is what we show
-optional string thumbnail:
-;; optional video title, can include markdown
-optional string title:
-optional string body:  ;; can include markdown
-
-
--- record image:
-string url:
-optional string thumbnail:
-optional string title:
-optional string body:  ;; can include markdown
+lets-update.link link:
+;; we will add all supported video platforms here
+optional string youtube-id:
 
 
 
-;; should this record be here?
+;; should this record be here or in a separate contacts package?
+;; we are going to create `lets-contact`, which is a "lower level" package
+;; compared to this one, meaning lets-update imports lets-contact.
 -- record contact:
 string name:
+string url: ;; e.g., https://amitu.com/ranedk.com
 string domain:
 optional string profile-picture:
 
 
 ;; these are updates from others
 -- record feed-item:
-contact from:
-update-entry entry:
+lets-update.contact from:
+lets-update.update update:

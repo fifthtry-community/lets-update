@@ -16,8 +16,37 @@ viewer-is-owner: $self-page.viewer-is-owner
 feed-url: $self-page.feed-url
 updates-url: $self-page.updates-url
 
--- ds.heading-medium: self updates will show up here
+-- lets-update.show-update: $update
+for: update in $self-page.updates
 
 -- end: lets-update.update-page
 
 -- end: self-page
+
+
+-- component show-update:
+caption lets-update.update update:
+
+-- ds.section-column:
+
+    -- ftd.column:
+    border-width.px: 2
+    border-radius.px: 8
+    border-color: $ds.colors.border
+    width: fill-container
+    padding.px: 24
+    spacing.fixed.px: 10
+
+        -- ds.heading-small: $show-update.update.title
+        if: { show-update.update.title != NULL }
+
+        -- ds.copy-regular:
+        if: { show-update.update.text != NULL }
+
+        $show-update.update.text
+
+    -- end: ftd.column
+
+-- end: ds.section-column
+
+-- end: show-update

@@ -19,20 +19,23 @@ fastn-badge: true
     align-content: top-left
 
 
-    -- heading-tab: My Updates
-    underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
-    link: $update-page.updates-url
+        -- heading-tab: My Updates
+        underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
+        link: $update-page.updates-url
 
-    -- ds.heading-small: |
-    if: { update-page.viewer-is-owner }
+        -- ds.heading-small: |
+        if: { update-page.viewer-is-owner }
 
-    -- heading-tab: Feed
-    if: { update-page.viewer-is-owner }
-    link: $update-page.feed-url
-    underline: $update-page.feed-page-is-open
+        -- heading-tab: Feed
+        if: { update-page.viewer-is-owner }
+        link: $update-page.feed-url
+        underline: $update-page.feed-page-is-open
 
 
 	-- end: ds.section-row
+
+	-- ds.section-column:
+	content: $update-page.content
 
 -- end: ds.site-page
 

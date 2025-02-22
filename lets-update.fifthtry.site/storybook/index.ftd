@@ -34,4 +34,4 @@ $processor$: pr.toc
 - Dashboard:
   - For Site Owner: /storybook/self/
   - For Site Owner - feed: /storybook/feed/
-  - For Public: /storybook/others/
+  - For Others: /storybook/others/

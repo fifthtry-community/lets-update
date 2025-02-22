@@ -1,3 +1,6 @@
+-- import: lets-update.fifthtry.site/storybook/self
+
 -- lets-update.self-page:
 viewer-is-owner: false
 updates-url: /storybook/others/
+updates: $self.updates

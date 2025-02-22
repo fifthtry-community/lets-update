@@ -3,7 +3,7 @@
 -- boolean feed-enabled: $lets-auth.is-personal-site
 
 -- import: lets-update.fifthtry.site/ui/self as _
-export: self-page
+export: self-page, show-update
 
 -- import: lets-update.fifthtry.site/ui/feed as _
 export: feed-page
@@ -34,17 +34,17 @@ $processor$: pr.request-data
 ;; every update has a unique url
 string permalink:
 ;; some updates will have title, to be shown more prominently
-optional string title:
+optional caption title:
 ;; this is the body of the update, can include markdown syntax
-optional string text:
+optional body text:
 ;; if you are linking to something
 optional lets-update.link link:
 ;; in case of image the title/sub-title/body provides enough information for alt text
 optional lets-update.link image:
 optional lets-update.video video:
 string list tags:
-integer likes:
-integer comments:
+integer likes: 0
+integer comments: 0
 string created-on:
 
 

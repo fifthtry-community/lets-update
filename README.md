@@ -42,7 +42,7 @@ Note: call `update-ui` if you modify dependencies in
 `lets-update.fifthtry.site/FASTN.ftd`, and during the initial setup.
 
 ```sh
-update-ui  # only run this when modifying dependencies in FASTN.ftd
+update-ui  # only run this when modifying dependencies and during initial setup
 run-ui
 ```
 

@@ -17,7 +17,9 @@ viewer-is-owner: true
 feed-url: $feed-page.feed-url
 updates-url: $feed-page.updates-url
 
--- ds.heading-medium: feed will show up here
+-- lets-update.show-update: $item.update
+for: item in $feed-page.items
+from: $item.from
 
 -- end: lets-update.update-page
 

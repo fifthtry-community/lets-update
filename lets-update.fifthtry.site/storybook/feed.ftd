@@ -1,2 +1,27 @@
+-- import: lets-update.fifthtry.site/storybook/self
+
 -- lets-update.feed-page:
 updates-url: /storybook/self/
+items: $items
+
+-- lets-update.feed-item list items:
+
+-- lets-update.feed-item: $self.updates.0
+from: $rg
+
+-- lets-update.feed-item: $self.updates.1
+from: $me
+
+-- lets-update.feed-item: $self.updates.2
+from: $rg
+
+-- end: items
+
+-- lets-update.contact rg: Rahul Gupta
+url: /storybook/rg/
+domain: rahulg.com
+
+
+-- lets-update.contact me: Amit Upadhyay
+url: /storybook/self/
+domain: amitu.com

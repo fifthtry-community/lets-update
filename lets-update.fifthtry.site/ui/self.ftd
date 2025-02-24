@@ -26,6 +26,7 @@ for: update in $self-page.updates
 
 -- component show-update:
 caption lets-update.update update:
+optional lets-update.contact from:
 
 -- ds.section-column:
 
@@ -45,8 +46,33 @@ caption lets-update.update update:
 
         $show-update.update.text
 
+        -- show-from: $show-update.from
+        if: { show-update.from != NULL }
+
     -- end: ftd.column
 
 -- end: ds.section-column
 
 -- end: show-update
+
+
+-- component show-from:
+caption lets-update.contact from:
+
+-- ftd.row:
+border-width.px: 2
+border-radius.px: 8
+border-color: $ds.colors.border
+width: hug-content
+align-self: end
+padding.px: 24
+spacing.fixed.px: 10
+link: $show-from.from.url
+
+    -- ds.heading-tiny: $show-from.from.name
+
+    -- ds.copy-regular: $show-from.from.domain
+
+-- end: ftd.row
+
+-- end: show-from

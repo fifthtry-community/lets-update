@@ -16,6 +16,9 @@ viewer-is-owner: $self-page.viewer-is-owner
 feed-url: $self-page.feed-url
 updates-url: $self-page.updates-url
 
+-- compose-form:
+if: { self-page.viewer-is-owner }
+
 -- lets-update.show-update: $update
 for: update in $self-page.updates
 
@@ -76,3 +79,17 @@ link: $show-from.from.url
 -- end: ftd.row
 
 -- end: show-from
+
+
+-- component compose-form:
+
+-- ds.section-row:
+
+-- ds.text-area:
+placeholder: What's on your mind?
+
+-- ds.primary-button: Submit
+
+-- end: ds.section-row
+
+-- end: compose-form

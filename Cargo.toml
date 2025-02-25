@@ -1,0 +1,19 @@
+[workspace]
+members = ["backend"]
+resolver = "2"
+
+
+[profile.release]
+lto = true
+opt-level = 's'
+
+[workspace.package]
+authors = [
+    "Amit Upadhyay <upadhyay@gmail.com>",
+    "Siddhant Kumar <siddhant@fifthtry.com>",
+]
+edition = "2021"
+
+[workspace.dependencies]
+ft-sdk = { version = "0.3.1", features = ["sqlite-default", "auth-provider", "field-extractors"] }
+serde_json = "1"

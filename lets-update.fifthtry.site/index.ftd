@@ -15,7 +15,7 @@ export: update-page
 -- integer from: 0
 $processor$: pr.request-data
 
--- string site-name: My Updates
+-- string site-name: $ds.site-name
 
 
 ;; when someone goes to their /updates/ page, they see their feed. if someone

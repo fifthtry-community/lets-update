@@ -20,7 +20,9 @@ For Windows or for other installation methods checkout [fastn.com/install/][1].
 Git clone this repository:
 
 ```sh
-git clone git@github.com:fifthtry-community/lets-update.git
+git clone https://github.com/fifthtry-community/lets-update.git  
+# or if you have ssh setup
+git clone git@github.com:fifthtry-community/lets-update.git 
 ```
 
 ### Use `auto.sh`

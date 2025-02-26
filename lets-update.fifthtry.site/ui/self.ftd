@@ -29,7 +29,7 @@ for: update in $self-page.updates
 
 -- component show-update:
 caption lets-update.update update:
-optional lets-update.contact from:
+optional lets-network.contact from:
 
 -- ds.section-column:
 
@@ -60,7 +60,7 @@ optional lets-update.contact from:
 
 
 -- component show-from:
-caption lets-update.contact from:
+caption lets-network.contact from:
 
 -- ftd.row:
 border-width.px: 2

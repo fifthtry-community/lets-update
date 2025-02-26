@@ -69,17 +69,8 @@ optional string youtube-id:
 
 
 
-;; should this record be here or in a separate contacts package?
-;; we are going to create `lets-contact`, which is a "lower level" package
-;; compared to this one, meaning lets-update imports lets-contact.
--- record contact:
-caption name:
-string url: ;; e.g., https://amitu.com/ranedk.com
-string domain:
-optional string profile-picture:
-
 
 ;; these are updates from others
 -- record feed-item:
 caption lets-update.update update:
-lets-update.contact from:
+lets-network.contact from:

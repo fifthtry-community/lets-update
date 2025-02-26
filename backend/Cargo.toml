@@ -12,3 +12,5 @@ crate-type = ["cdylib"]
 [dependencies]
 serde_json.workspace = true
 ft-sdk.workspace = true
+chrono.workspace = true
+http.workspace = true

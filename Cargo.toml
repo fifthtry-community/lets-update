@@ -17,3 +17,5 @@ edition = "2021"
 [workspace.dependencies]
 ft-sdk = { version = "0.3.1", features = ["sqlite-default", "auth-provider", "field-extractors"] }
 serde_json = "1"
+chrono = { version = "0.4", features = ["serde"], default-features = false }
+http = "1.0"

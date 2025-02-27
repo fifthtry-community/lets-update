@@ -5,6 +5,7 @@ pub fn create(
     content: serde_json::Value,
     links: Vec<backend::Link>,
     tags: Vec<String>,
+    is_public: bool,
 ) -> ft_sdk::Result<String> {
     use backend::schema::cdp_update;
     use diesel::prelude::*;
@@ -22,7 +23,7 @@ pub fn create(
             cdp_update::updated_at.eq(ft_sdk::env::now()),
             cdp_update::reply_to.eq(None::<i64>),
             cdp_update::user_id.eq(user_id),
-            cdp_update::is_public.eq(true),
+            cdp_update::is_public.eq(is_public),
         ))
         .execute(conn)?;
 

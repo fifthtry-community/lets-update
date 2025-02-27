@@ -37,6 +37,8 @@ dependencies = [
  "diesel",
  "ft-sdk",
  "http",
+ "lets-network",
+ "serde",
  "serde_json",
 ]
 
@@ -328,6 +330,15 @@ checksum = "1cfaf33c695fc6e08064efbc1f72ec937429614f25eef83af942d0e227c3a28f"
 dependencies = [
  "once_cell",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "lets-network"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "085a9845c5f70cf1bad4c5d43ce0fe43a8ddfaa4e7888803ea04e44ad90e5acc"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

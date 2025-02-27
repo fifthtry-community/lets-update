@@ -14,7 +14,6 @@ diesel::table! {
     }
 }
 
-
 diesel::table! {
     cdp_update_reaction (id) {
         id -> BigInt,
@@ -25,7 +24,6 @@ diesel::table! {
         updated_at -> BigInt,
     }
 }
-
 
 diesel::table! {
     cdp_feed (id) {

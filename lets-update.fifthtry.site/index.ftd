@@ -42,6 +42,7 @@ optional lets-update.link link:
 ;; in case of image the title/sub-title/body provides enough information for alt text
 optional lets-update.link image:
 optional lets-update.video video:
+optional lets-update.quote quote:
 string list tags:
 integer likes: 0
 integer comments: 0
@@ -59,15 +60,18 @@ optional string thumbnail: ;; e.g., https://fifthtry.com/blog/lets-talk/thumbnai
 optional string body: ;; e.g., Talk to people on the domain you own
 
 
-
+-- record quote:
+optional caption by:
+body text:
+optional string link:
+optional string image:
 
 
 -- record video:
 lets-update.link link:
-;; we will add all supported video platforms here
-optional string youtube-id:
-
-
+;; we will add all supported video platforms here, once we support more than one
+;; these will become optional links
+string youtube-id:
 
 
 ;; these are updates from others

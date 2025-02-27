@@ -1,5 +1,6 @@
 pub fn create(
     conn: &mut ft_sdk::Connection,
+    user_id: i64,
     content_type: &str,
     content: serde_json::Value,
     links: Vec<backend::Link>,
@@ -19,23 +20,9 @@ pub fn create(
             cdp_update::tags.eq(&serde_json::to_string(&tags)?),
             cdp_update::created_at.eq(ft_sdk::env::now()),
             cdp_update::updated_at.eq(ft_sdk::env::now()),
-            // created_at -> BigInt,
-            // updated_at -> BigInt,
-            // reply_to -> Nullable<BigInt>,
-            // user_id -> BigInt,
-            // is_public -> Bool,
-            // cdp_update::title.eq(self.title),
-            // cdp_update::body.eq(self.body),
-            // cdp_update::link.eq(self.link),
-            // cdp_update.quote.eq(self.quote),
-            // cdp_update.image.eq(self.image),
-            // cdp_update.video.eq(self.video),
-            // cdp_update.tags.eq(&self.tags),
-            // cdp_update.likes.eq(self.likes),
-            // cdp_update.comments.eq(self.comments),
-            // cdp_update.permalink.eq(self.permalink),
-            // cdp_update.created_on.eq(self.created_on),
-            // cdp_update.updated_on.eq(self.updated_on),
+            cdp_update::reply_to.eq(None::<i64>),
+            cdp_update::user_id.eq(user_id),
+            cdp_update::is_public.eq(true),
         ))
         .execute(conn)?;
 

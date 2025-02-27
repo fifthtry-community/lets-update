@@ -4,6 +4,7 @@
 
 extern crate self as backend;
 
+mod db;
 mod handlers;
 mod schema;
 
@@ -30,6 +31,8 @@ impl ft_sdk::FromRequest for MySelf {
     }
 }
 
+pub const TEXT_POST: &str = "text-post";
+
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Update {
     // every update has a unique url
@@ -39,7 +42,7 @@ pub struct Update {
     // this is the body of the update, can include markdown syntax
     pub body: Option<String>,
     // if you are linking to something
-    pub link: Option<Link>,
+    pub links: Vec<Link>,
     // in case of image the title/sub-title/body provides enough information for alt text
     pub quote: Option<Quote>,
     pub image: Option<Link>,
@@ -73,9 +76,32 @@ pub struct FeedItem {
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
-struct Quote {
+pub struct Quote {
     pub text: String,
     pub by: Option<String>,
     pub link: Option<String>,
     pub image: Option<String>,
+}
+
+// fastn is buggy so we have to do this.
+struct HTTPSScheme(pub ft_sdk::Scheme);
+
+impl ft_sdk::FromRequest for HTTPSScheme {
+    fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
+        let host = ft_sdk::Host::from_request(req)?;
+
+        if host.without_port() == "127.0.0.1" {
+            Ok(HTTPSScheme(ft_sdk::Scheme::Http))
+        } else {
+            Ok(HTTPSScheme(ft_sdk::Scheme::Https))
+        }
+    }
+}
+
+impl std::ops::Deref for HTTPSScheme {
+    type Target = ft_sdk::Scheme;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

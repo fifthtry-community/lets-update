@@ -7,7 +7,7 @@ pub fn create_text_post(
     scheme: backend::HTTPSScheme,
 ) -> ft_sdk::form::Result {
     let guid = data.save(&mut me.conn, me.ud.id)?;
-    ft_sdk::form::redirect(app_url.join(&scheme, &host, &format!("/u/{guid}/"))?)
+    ft_sdk::form::redirect(app_url.join(&scheme, &host, &backend::urls::post(guid))?)
 }
 
 #[derive(Debug, serde::Deserialize)]

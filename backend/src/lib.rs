@@ -6,9 +6,10 @@ extern crate self as backend;
 
 mod db;
 mod handlers;
-mod schema;
 mod me;
+mod schema;
 mod update;
+mod urls;
 
 pub use me::{MaybeMe, MySelf};
 pub use update::{FeedItem, Link, Quote, Update, Video};

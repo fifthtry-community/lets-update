@@ -23,10 +23,16 @@ impl ListInput {
         // logged in -> public posts and user's posts
 
         // for now assume we only have public posts
-        let _rows = cdp_update::table.select(backend::db::DbUpdate::as_select())
+        let rows = cdp_update::table
+            .select(backend::db::DbUpdate::as_select())
             .filter(cdp_update::is_public.eq(true))
             .load(conn)?;
-        
-        todo!()
+
+        let mut result = vec![];
+        for row in rows {
+            result.push(row.into_update()?);
+        }
+
+        Ok(result)
     }
 }

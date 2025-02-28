@@ -5,7 +5,6 @@ pub struct MaybeMe {
     pub is_admin: bool,
 }
 
-
 impl ft_sdk::FromRequest for MaybeMe {
     fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
         let cookie: ft_sdk::Cookie<{ ft_sdk::auth::SESSION_KEY }> =

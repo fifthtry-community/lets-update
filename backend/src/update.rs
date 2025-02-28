@@ -13,6 +13,7 @@ pub struct Update {
     pub image: Option<Link>,
     pub video: Option<Video>,
     pub tags: Vec<String>,
+    pub is_public: bool,
     pub likes: i64,
     pub comments: i64,
     pub created_on: String,

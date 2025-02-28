@@ -7,24 +7,52 @@ pub use list::ListInput;
 #[derive(diesel::Queryable, diesel::Selectable)]
 #[diesel(table_name = backend::schema::cdp_update)]
 pub struct DbUpdate {
-    #[expect(unused)]
     pub guid: String,
-    #[expect(unused)]
     pub content_type: String,
-    #[expect(unused)]
     pub content: String,
-    #[expect(unused)]
     pub links: String,
-    #[expect(unused)]
     pub tags: String,
-    #[expect(unused)]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    #[expect(unused)]
     pub updated_at: chrono::DateTime<chrono::Utc>,
     #[expect(unused)]
     pub reply_to: Option<i64>,
     #[expect(unused)]
     pub user_id: i64,
-    #[expect(unused)]
     pub is_public: bool,
+}
+
+impl DbUpdate {
+    fn into_update(self) -> ft_sdk::Result<backend::Update> {
+        match self.content_type.as_str() {
+            backend::TEXT_POST => {
+                #[derive(serde::Deserialize)]
+                struct TB {
+                    title: Option<String>,
+                    body: Option<String>,
+                }
+
+                let tb = serde_json::from_str::<TB>(&self.content)?;
+                Ok(backend::Update {
+                    permalink: backend::urls::post(self.guid),
+                    title: tb.title,
+                    body: tb.body,
+                    links: serde_json::from_str(&self.links)?,
+                    tags: serde_json::from_str(&self.tags)?,
+                    is_public: self.is_public,
+                    created_on: self.created_at.to_rfc3339(),
+                    updated_on: self.updated_at.to_rfc3339(),
+
+                    quote: None,
+                    image: None,
+                    video: None,
+
+                    // TODO
+                    likes: 0,
+                    comments: 0,
+                    // user_id, reply_to
+                })
+            }
+            _ => unimplemented!(),
+        }
+    }
 }

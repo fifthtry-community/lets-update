@@ -2,6 +2,7 @@ pub struct MaybeMe {
     pub now: chrono::DateTime<chrono::Utc>,
     pub ud: Option<ft_sdk::UserData>,
     pub conn: ft_sdk::Connection,
+    pub is_admin: bool,
 }
 
 
@@ -14,6 +15,7 @@ impl ft_sdk::FromRequest for MaybeMe {
             now: ft_sdk::FromRequest::from_request(req)?,
             ud: ft_sdk::auth::ud(cookie, &mut conn)?,
             conn,
+            is_admin: false,
         })
     }
 }

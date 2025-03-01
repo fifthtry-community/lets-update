@@ -18,6 +18,19 @@ $processor$: pr.request-data
 -- string site-name: $ds.site-name
 
 
+-- lets-update.update list updates:
+$processor$: pr.http
+url: /updates/backend/post-list/
+
+
+-- lets-update.update-page:
+updates: $updates
+viewer-is-owner: false
+updates-url: /storybook/others/
+
+
+
+
 ;; when someone goes to their /updates/ page, they see their feed. if someone
 ;; else goes to your /updates/ page, they see your updates.
 

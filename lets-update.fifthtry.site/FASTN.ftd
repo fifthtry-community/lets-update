@@ -25,7 +25,7 @@ system-is-confidential: false
 
 ;; https://lets-update.fifthtry-community.com/design/schema/
 
-CREATE TABLE cdp_feed (
+CREATE TABLE IF NOT EXISTS cdp_feed  (
     id INTEGER PRIMARY KEY,
 
     -- Foreign key to the user who created the update. the only way to create
@@ -96,7 +96,7 @@ CREATE TABLE cdp_feed (
 ) STRICT;
 
 
-CREATE TABLE cdp_update (
+CREATE TABLE IF NOT EXISTS cdp_update (
     id INTEGER PRIMARY KEY,
 
     -- this is the id other people see, this is some random string, length: 32.
@@ -145,7 +145,7 @@ CREATE TABLE cdp_update (
 );
 
 
-CREATE TABLE cdp_update_reaction (
+CREATE TABLE IF NOT EXISTS cdp_update_reaction (
     id INTEGER PRIMARY KEY,
 
     -- ID of the corresponding update. we only store reactions for our updates,

@@ -3,11 +3,9 @@ pub fn create_text_post(
     mut me: backend::MySelf,
     ft_sdk::Json(data): ft_sdk::Json<TextPost>,
     app_url: ft_sdk::AppUrl,
-    host: ft_sdk::Host,
-    scheme: backend::HTTPSScheme,
 ) -> ft_sdk::form::Result {
     let guid = data.save(&mut me.conn, me.ud.id)?;
-    ft_sdk::form::redirect(app_url.join(&scheme, &host, &backend::urls::post(guid))?)
+    ft_sdk::form::redirect(app_url.join(backend::urls::post(guid))?)
 }
 
 #[derive(Debug, serde::Deserialize)]

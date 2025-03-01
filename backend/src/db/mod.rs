@@ -6,6 +6,7 @@ pub use list::ListInput;
 
 #[derive(diesel::Queryable, diesel::Selectable)]
 #[diesel(table_name = backend::schema::cdp_update)]
+#[diesel(check_for_backend(ft_sdk::Sqlite))]
 pub struct DbUpdate {
     pub guid: String,
     pub content_type: String,

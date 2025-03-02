@@ -11,6 +11,8 @@ export: feed-page
 -- import: lets-update.fifthtry.site/ui/page as _
 export: update-page
 
+-- import: lets-update.fifthtry.site/records as _
+export: update, link, quote, video, feed-item
 
 -- integer from: 0
 $processor$: pr.request-data
@@ -41,53 +43,3 @@ updates-url: /storybook/others/
 
 ;; in future we will use enums to handle different kinds of updates, for now
 ;; every update has a text, timestamp, embedded images, optional video,
-
-;; these are self updates
--- record update:
-;; every update has a unique url
-string permalink:
-;; some updates will have title, to be shown more prominently
-optional caption title:
-;; this is the body of the update, can include markdown syntax
-optional body text:
-;; if you are linking to something
-optional lets-update.link link:
-;; in case of image the title/sub-title/body provides enough information for alt text
-optional lets-update.link image:
-optional lets-update.video video:
-optional lets-update.quote quote:
-string list tags:
-integer likes: 0
-integer comments: 0
-string created-on:
-
-
-
-
-;; for links we are trying to follow social media preview card format
--- record link:
-string url: ;; e.g., https://fifthtry.com/blog/lets-talk/
-string title: ;; e.g., Launching Let's Talk
-optional string sub-title: ;; e.g., FifthTry Blog
-optional string thumbnail: ;; e.g., https://fifthtry.com/blog/lets-talk/thumbnail.jpg
-optional string body: ;; e.g., Talk to people on the domain you own
-
-
--- record quote:
-optional caption by:
-body text:
-optional string link:
-optional string image:
-
-
--- record video:
-lets-update.link link:
-;; we will add all supported video platforms here, once we support more than one
-;; these will become optional links
-string youtube-id:
-
-
-;; these are updates from others
--- record feed-item:
-caption lets-update.update update:
-lets-network.contact from:

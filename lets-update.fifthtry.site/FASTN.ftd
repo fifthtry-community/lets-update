@@ -21,6 +21,11 @@ system-is-confidential: false
 -- fastn.auto-import: lets-network.fifthtry.site as lets-network
 
 
+-- fastn.url-mappings:
+
+/backend/* -> wasm+proxy://backend.wasm/*
+
+
 -- fastn.migration: 0001-initial-migration
 
 ;; https://lets-update.fifthtry-community.com/design/schema/

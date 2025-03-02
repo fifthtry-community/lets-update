@@ -20,10 +20,10 @@ $processor$: pr.request-data
 
 -- lets-update.update list updates:
 $processor$: pr.http
-url: /updates/backend/post-list/
+url: /backend/post-list/
 
 
--- lets-update.update-page:
+-- lets-update.self-page:
 updates: $updates
 viewer-is-owner: false
 updates-url: /storybook/others/

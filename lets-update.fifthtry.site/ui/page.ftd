@@ -20,13 +20,16 @@ fastn-badge: true
 
 
         -- heading-tab: My Updates
-        underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
+        ;; hiding the feed tab for now
+        /underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
         link: $update-page.updates-url
 
-        -- ds.heading-small: |
+        ;; hiding the feed tab for now
+        /-- ds.heading-small: |
         if: { update-page.viewer-is-owner }
 
-        -- heading-tab: Feed
+        ;; hiding the feed tab for now
+        /-- heading-tab: Feed
         if: { update-page.viewer-is-owner }
         link: $update-page.feed-url
         underline: $update-page.feed-page-is-open

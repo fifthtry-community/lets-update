@@ -1,0 +1,8 @@
+-- import: lets-update.fifthtry.site/assets
+
+-- void create-text-post(title, is_public):
+ftd.string-field $title:
+ftd.boolean-field $is_public:
+js: $assets.files.actions.alert.js
+
+show_alert("/backend/create-text-post/", title, is_public)

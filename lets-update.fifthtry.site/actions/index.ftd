@@ -1,0 +1,6 @@
+-- void create-text-post(title, is_public):
+ftd.string-field $title:
+ftd.boolean-field $is_public:
+string action_url: $ftd.app-url(path=/backend/create-text-post/)
+
+ftd.submit_form(action_url, title, is_public)

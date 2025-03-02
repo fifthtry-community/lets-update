@@ -1,7 +1,10 @@
+-- import: lets-update.fifthtry.site/actions/dummy
+
 -- lets-update.self-page:
 viewer-is-owner: true
 feed-url: /storybook/feed/
 updates: $updates
+actions: dummy
 
 
 

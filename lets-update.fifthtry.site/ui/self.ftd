@@ -1,3 +1,5 @@
+-- import: lets-update.fifthtry.site/actions
+
 -- component self-page:
 lets-update.update list updates:
 boolean viewer-is-owner: false
@@ -9,6 +11,7 @@ optional string clear-search-url:
 ;; if there are more results to show, next and previous page urls are provided
 optional string next-page-url:
 optional string previous-page-url:
+module actions: actions
 
 -- lets-update.update-page:
 feed-page-is-open: false
@@ -18,6 +21,7 @@ updates-url: $self-page.updates-url
 
 -- compose-form:
 if: { self-page.viewer-is-owner }
+actions: $self-page.actions
 
 -- lets-update.show-update: $update
 for: update in $self-page.updates
@@ -81,14 +85,26 @@ link: $show-from.from.url
 -- end: show-from
 
 
+-- ftd.string-field $title: title
+-- ftd.boolean-field $is-public: is-public
+value: true
+
+
+
 -- component compose-form:
+module actions: actions
 
 -- ds.section-row:
 
--- ds.text-area:
-placeholder: What's on your mind?
+    -- ds.form-field: Title Of Your Post
+    $field: $title
 
--- ds.primary-button: Submit
+    -- ds.checkbox: Post Is Public
+    $is-checked: $is-public.value
+    size: small
+
+    -- ds.primary-button: Submit
+    $on-click$: $compose-form.actions.create-text-post($title=$title, $is_public=$is-public)
 
 -- end: ds.section-row
 

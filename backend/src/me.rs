@@ -10,11 +10,14 @@ impl ft_sdk::FromRequest for MaybeMe {
         let cookie: ft_sdk::Cookie<{ ft_sdk::auth::SESSION_KEY }> =
             ft_sdk::FromRequest::from_request(req)?;
         let mut conn = ft_sdk::FromRequest::from_request(req)?;
+        let ud = ft_sdk::auth::ud(cookie, &mut conn)?;
+        let is_admin = ud.as_ref().map(|u| u.id == 1).unwrap_or(false);
+
         Ok(MaybeMe {
             now: ft_sdk::FromRequest::from_request(req)?,
-            ud: ft_sdk::auth::ud(cookie, &mut conn)?,
+            ud,
             conn,
-            is_admin: false,
+            is_admin,
         })
     }
 }

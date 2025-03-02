@@ -233,9 +233,9 @@ dependencies = [
 
 [[package]]
 name = "ft-sdk"
-version = "0.5.0"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e41046587125e0234fa2ffe0ed9669bb3097c7597f71b3649ff146e66d6c5f31"
+checksum = "748429f6c18f765aa08c73d887974fe529ab9d0116e60ab9622d5217a1960736"
 dependencies = [
  "anyhow",
  "bytes",

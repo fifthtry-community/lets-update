@@ -6,7 +6,10 @@ fn post_list(
     let posts: Vec<_> = backend::db::ListInput::default()
         .fetch(&mut me.conn, &me.ud, me.is_admin)?
         .into_iter()
-        .map(|mut u| u.permalink = app_url.join(u.permalink).unwrap())
+        .map(|mut u| {
+            u.permalink = app_url.join(u.permalink).unwrap();
+            u
+        })
         .collect();
     ft_sdk::data::json(posts)
 }

@@ -26,7 +26,8 @@ impl DbUpdate {
     fn into_update(self) -> ft_sdk::Result<backend::Update> {
         match self.content_type.as_str() {
             backend::TEXT_POST => {
-                #[derive(serde::Deserialize)]
+                #[derive(serde::Deserialize, Default)]
+                #[serde(default)]
                 struct TB {
                     title: Option<String>,
                     body: Option<String>,
@@ -40,8 +41,8 @@ impl DbUpdate {
                     links: serde_json::from_str(&self.links)?,
                     tags: serde_json::from_str(&self.tags)?,
                     is_public: self.is_public,
-                    created_on: self.created_at.to_rfc3339(),
-                    updated_on: self.updated_at.to_rfc3339(),
+                    created_at: self.created_at.to_rfc3339(),
+                    updated_at: self.updated_at.to_rfc3339(),
 
                     quote: None,
                     image: None,

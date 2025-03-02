@@ -1,4 +1,5 @@
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
 pub struct Update {
     // every update has a unique url
     pub permalink: String,
@@ -16,11 +17,12 @@ pub struct Update {
     pub is_public: bool,
     pub likes: i64,
     pub comments: i64,
-    pub created_on: String,
-    pub updated_on: String,
+    pub created_at: String,
+    pub updated_at: String,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
 pub struct Link {
     pub url: String,
     pub title: String,
@@ -30,18 +32,21 @@ pub struct Link {
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
 pub struct Video {
     pub link: Link,
     pub youtube_id: String,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
 pub struct FeedItem {
     pub update: Update,
     pub contact: lets_network::Contact,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
 pub struct Quote {
     pub text: String,
     pub by: Option<String>,

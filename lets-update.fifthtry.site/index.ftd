@@ -25,13 +25,15 @@ $processor$: pr.http
 url: /backend/post-list/
 
 
+
+
+-- ds.heading-medium: Group Sites Are Not Yet Supported
+if: { !lets-auth.is-personal-site }
+
+
 -- lets-update.self-page:
 updates: $updates
-viewer-is-owner: false
-updates-url: /storybook/others/
-
-
-
+viewer-is-owner if { lets-auth.user != NULL }: true
 
 ;; when someone goes to their /updates/ page, they see their feed. if someone
 ;; else goes to your /updates/ page, they see your updates.

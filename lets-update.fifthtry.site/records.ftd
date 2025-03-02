@@ -5,9 +5,9 @@ string permalink:
 ;; some updates will have title, to be shown more prominently
 optional caption title:
 ;; this is the body of the update, can include markdown syntax
-optional body text:
+optional body body:
 ;; if you are linking to something
-optional lets-update.link link:
+lets-update.link list links:
 ;; in case of image the title/sub-title/body provides enough information for alt text
 optional lets-update.link image:
 optional lets-update.video video:
@@ -15,7 +15,7 @@ optional lets-update.quote quote:
 string list tags:
 integer likes: 0
 integer comments: 0
-string created-on:
+string created-at:
 
 
 

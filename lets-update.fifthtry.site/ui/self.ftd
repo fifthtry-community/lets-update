@@ -45,9 +45,9 @@ optional lets-network.contact from:
         if: { show-update.update.title != NULL }
 
         -- ds.copy-regular:
-        if: { show-update.update.text != NULL }
+        if: { show-update.update.body != NULL }
 
-        $show-update.update.text
+        $show-update.update.body
 
         -- show-from: $show-update.from
         if: { show-update.from != NULL }

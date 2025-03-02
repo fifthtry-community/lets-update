@@ -1,14 +1,19 @@
 #[ft_sdk::form]
 pub fn create_text_post(
-    mut me: backend::MySelf,
+    mut me: backend::MaybeMe,
     ft_sdk::Json(data): ft_sdk::Json<TextPost>,
     app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::form::Result {
-    let guid = data.save(&mut me.conn, me.ud.id)?;
+    if data.title.is_none() && data.body.is_none() {
+        return Err(ft_sdk::single_error("title", "Either title or body must be provided").into());
+    }
+    // todo: we are hardcoding user_id to 1 since auth is not working on my machine
+    let guid = data.save(&mut me.conn, me.ud.map(|v| v.id).unwrap_or(1))?;
     ft_sdk::form::redirect(app_url.join(backend::urls::post(guid))?)
 }
 
 #[derive(Debug, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
 struct TextPost {
     title: Option<String>,
     body: Option<String>,

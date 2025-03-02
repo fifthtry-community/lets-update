@@ -8,6 +8,7 @@ pub use list::ListInput;
 #[diesel(table_name = backend::schema::cdp_update)]
 #[diesel(check_for_backend(ft_sdk::Sqlite))]
 pub struct DbUpdate {
+    pub id: i64,
     pub guid: String,
     pub content_type: String,
     pub content: String,

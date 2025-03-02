@@ -1,5 +1,5 @@
 -- component feed-page:
-lets-update.feed-item list items:
+lets-update.paged-feed page:
 ;; if user has searched for something, the items are search results
 optional string search:
 ;; if user has searched something, clicking on this clears the search
@@ -18,7 +18,7 @@ feed-url: $feed-page.feed-url
 updates-url: $feed-page.updates-url
 
 -- lets-update.show-update: $item.update
-for: item in $feed-page.items
+for: item in $feed-page.page.items
 from: $item.from
 
 -- end: lets-update.update-page

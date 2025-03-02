@@ -3,6 +3,10 @@
 
 -- lets-update.feed-page:
 updates-url: /storybook/self/
+page: $page
+
+
+-- lets-update.paged-feed page:
 items: $items
 
 -- lets-update.feed-item list items:

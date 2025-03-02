@@ -17,7 +17,10 @@ integer likes: 0
 integer comments: 0
 string created-at:
 
-
+-- record paged-updates:
+optional string next:
+optional string previous:
+lets-update.update list items:
 
 
 ;; for links we are trying to follow social media preview card format
@@ -47,3 +50,8 @@ string youtube-id:
 -- record feed-item:
 caption lets-update.update update:
 lets-network.contact from:
+
+-- record paged-feed:
+optional string next:
+optional string previous:
+lets-update.feed-item list items:

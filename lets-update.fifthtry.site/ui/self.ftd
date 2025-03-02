@@ -1,7 +1,7 @@
 -- import: lets-update.fifthtry.site/actions
 
 -- component self-page:
-lets-update.update list updates:
+lets-update.paged-updates page:
 boolean viewer-is-owner: false
 string updates-url: $ftd.app-url(path=/)
 string feed-url: $ftd.app-url(path=/feed/)
@@ -24,7 +24,7 @@ if: { self-page.viewer-is-owner }
 actions: $self-page.actions
 
 -- lets-update.show-update: $update
-for: update in $self-page.updates
+for: update in $self-page.page.items
 
 -- end: lets-update.update-page
 

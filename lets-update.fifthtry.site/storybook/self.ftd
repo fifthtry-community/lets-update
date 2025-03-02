@@ -3,12 +3,14 @@
 -- lets-update.self-page:
 viewer-is-owner: true
 feed-url: /storybook/feed/
-updates: $updates
+page: $page
 actions: dummy
 
 
 
 
+-- lets-update.paged-updates page:
+items: $updates
 
 -- lets-update.update list updates:
 

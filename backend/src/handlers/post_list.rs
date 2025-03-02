@@ -7,7 +7,7 @@ fn post_list(
     per_page: ft_sdk::Default<"per-page", Option<u8>>,
 ) -> ft_sdk::data::Result {
     let per_page = per_page
-        .check(|p| p > &Some(100), "Can not return more than 100 rows")?
+        .check(|p| p < &Some(100), "Can not return more than 100 rows")?
         .get()
         .unwrap_or(10);
     let mut posts = backend::db::ListInput {
@@ -16,7 +16,7 @@ fn post_list(
         per_page,
     }
         .fetch(&mut me.conn, &me.ud, me.is_admin)?;
-    posts
+    posts.items
         .iter_mut()
         .for_each(|u| u.permalink = app_url.join(&u.permalink).unwrap());
     ft_sdk::data::json(posts)

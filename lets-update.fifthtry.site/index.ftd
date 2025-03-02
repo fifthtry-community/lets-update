@@ -12,7 +12,7 @@ export: feed-page
 export: update-page
 
 -- import: lets-update.fifthtry.site/records as _
-export: update, link, quote, video, feed-item
+export: update, link, quote, video, feed-item, paged-updates, paged-feed
 
 -- integer from: 0
 $processor$: pr.request-data
@@ -20,7 +20,7 @@ $processor$: pr.request-data
 -- string site-name: $ds.site-name
 
 
--- lets-update.update list updates:
+-- lets-update.paged-updates page:
 $processor$: pr.http
 url: /backend/post-list/
 
@@ -32,7 +32,7 @@ if: { !lets-auth.is-personal-site }
 
 
 -- lets-update.self-page:
-updates: $updates
+page: $page
 viewer-is-owner if { lets-auth.user != NULL }: true
 
 ;; when someone goes to their /updates/ page, they see their feed. if someone

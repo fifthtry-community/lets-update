@@ -1,16 +1,17 @@
 #[ft_sdk::form]
 pub fn create_text_post(
-    mut me: backend::MaybeMe,
+    mut me: backend::MySelf,
     ft_sdk::Json(data): ft_sdk::Json<TextPost>,
-    // app_url: ft_sdk::AppUrl,
+    app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::form::Result {
     if data.title.is_none() && data.body.is_none() {
         return Err(ft_sdk::single_error("title", "Either title or body must be provided").into());
     }
-    // todo: we are hardcoding user_id to 1 since auth is not working on my machine
-    data.save(&mut me.conn, me.ud.map(|v| v.id).unwrap_or(1))?;
-    // ft_sdk::form::redirect(app_url.join(backend::urls::post(guid))?)
-    ft_sdk::form::reload()
+    if !me.ud.verified_email {
+        return Err(ft_sdk::single_error("title", "Email must be verified to post.").into());
+    }
+    data.save(&mut me.conn, me.ud.id)?;
+    ft_sdk::form::redirect(app_url.join("/")?)
 }
 
 #[derive(Debug, serde::Deserialize)]

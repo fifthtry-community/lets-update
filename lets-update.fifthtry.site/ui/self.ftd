@@ -26,9 +26,18 @@ actions: $self-page.actions
 -- lets-update.show-update: $update
 for: update in $self-page.page.items
 
--- ds.copy-regular: Next ->
-if: { self-page.page.next != NULL }
-link: $self-page.page.next
+;; pagination links
+-- ds.row:
+
+    -- ds.copy-regular: <- Previous
+    if: { self-page.page.previous != NULL }
+    link: $self-page.page.previous
+
+    -- ds.copy-regular: Next ->
+    if: { self-page.page.next != NULL }
+    link: $self-page.page.next
+
+-- end: ds.row
 
 -- end: lets-update.update-page
 

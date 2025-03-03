@@ -30,32 +30,36 @@ impl ListInput {
                 .order(cdp_update::id.desc())
                 .load(conn)?;
 
-            let previous = cdp_update::table
+            let previous_rows = cdp_update::table
                 .select(cdp_update::id)
                 .filter(cdp_update::id.gt(self.since))
                 .order(cdp_update::id.asc())
-                .first(conn)
-                .optional()?
-                .map(|id: i64| format!("{}?since={id}", app_url.join("/").unwrap()));
+                .limit(i64::from(self.per_page))
+                .load::<i64>(conn)?;
+
+            let previous = previous_rows.first()
+                .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()));
 
             (rows, previous)
         } else {
             let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
-                .filter(cdp_update::id.lt(self.since))
+                .filter(cdp_update::id.le(self.since))
                 .filter(cdp_update::is_public.eq(true))
                 .limit(i64::from(self.per_page + 1))
                 .order(cdp_update::id.desc())
                 .load(conn)?;
 
-            let previous = cdp_update::table
+            let previous_rows = cdp_update::table
                 .select(cdp_update::id)
                 .filter(cdp_update::id.gt(self.since))
                 .filter(cdp_update::is_public.eq(true))
                 .order(cdp_update::id.asc())
-                .first(conn)
-                .optional()?
-                .map(|id: i64| format!("{}?since={id}", app_url.join("/").unwrap()));
+                .limit(i64::from(self.per_page))
+                .load::<i64>(conn)?;
+
+            let previous = previous_rows.first()
+                .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()));
 
             (rows, previous)
         };

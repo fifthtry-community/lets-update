@@ -37,6 +37,8 @@ impl ListInput {
                 .load(conn)?
         };
 
+        rows.reverse();
+
         let next = if rows.len() > self.per_page as usize {
             rows.pop().map(|u| u.id.to_string())
         } else {

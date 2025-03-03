@@ -4,7 +4,7 @@ pub fn create_text_post(
     ft_sdk::Json(data): ft_sdk::Json<TextPost>,
     app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::form::Result {
-    if data.title.is_none() && data.body.is_none() {
+    if data.title().unwrap_or("").is_empty() && data.body().unwrap_or("").is_empty() {
         return Err(ft_sdk::single_error("title", "Either title or body must be provided").into());
     }
     if !me.ud.verified_email {
@@ -23,6 +23,14 @@ struct TextPost {
 }
 
 impl TextPost {
+    fn title(&self) -> Option<&str> {
+        self.title.as_ref().map(AsRef::as_ref)
+    }
+
+    fn body(&self) -> Option<&str> {
+        self.body.as_ref().map(AsRef::as_ref)
+    }
+
     fn save(self, conn: &mut ft_sdk::Connection, user_id: i64) -> ft_sdk::Result<String> {
         backend::db::create(
             conn,

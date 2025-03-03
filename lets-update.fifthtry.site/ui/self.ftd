@@ -26,7 +26,7 @@ actions: $self-page.actions
 -- lets-update.show-update: $update
 for: update in $self-page.page.items
 
--- ds.copy-regular: $self-page.page.next
+-- ds.copy-regular: Next ->
 if: { self-page.page.next != NULL }
 link: $self-page.page.next
 
@@ -100,14 +100,19 @@ module actions: actions
 
 -- ds.section-row:
 
-    -- ds.form-field: Title Of Your Post
-    $field: $title
+    -- ds.column:
 
-    -- ds.checkbox: Post Is Public
-    $is-checked: $is-public.value
-    size: small
+        -- ds.form-field: Create A New Update
+        placeholder: Write your update here
+        $field: $title
 
-    -- ds.primary-button: Submit
+        -- ds.checkbox: Update Is Public
+        $is-checked: $is-public.value
+        size: small
+
+    -- end: ds.column
+
+    -- ds.primary-button: Save Update
     $on-click$: $compose-form.actions.create-text-post($title=$title, $is_public=$is-public)
 
 -- end: ds.section-row

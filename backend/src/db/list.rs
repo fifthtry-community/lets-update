@@ -70,6 +70,16 @@ pub struct Paged<ITEM: serde::Serialize> {
 
 impl<T: serde::Serialize> Paged<T> {
     pub fn fix_nav_links(&mut self, app_url: &ft_sdk::AppUrl) -> ft_sdk::Result<()> {
+
+        // TODO: remove this once fastn issue is fixed
+        let mut app_url = app_url.to_owned();
+
+        ft_sdk::println!("app_url: {app_url:?}");
+
+        if app_url.url.as_ref().map(AsRef::as_ref) == Some("/backend/") {
+            app_url.url = Some("/updates/".to_string());
+        };
+
         if let Some(next) = &self.next {
             self.next = Some(format!("{}?since={next}", app_url.join("/")?));
         };

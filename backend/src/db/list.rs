@@ -22,21 +22,42 @@ impl ListInput {
         // logged in -> public posts and user's posts
 
         // for now assume we only have public posts
-        let mut rows = if is_admin {
-            cdp_update::table
+        let (mut rows, previous) = if is_admin {
+            let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
                 .limit(i64::from(self.per_page + 1))
                 .filter(cdp_update::id.lt(self.since))
                 .order(cdp_update::id.desc())
-                .load(conn)?
+                .load(conn)?;
+
+            let previous = cdp_update::table
+                .select(cdp_update::id)
+                .filter(cdp_update::id.gt(self.since))
+                .order(cdp_update::id.asc())
+                .first(conn)
+                .optional()?
+                .map(|id: i64| format!("{}?since={id}", app_url.join("/").unwrap()));
+
+            (rows, previous)
         } else {
-            cdp_update::table
+            let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
                 .filter(cdp_update::id.lt(self.since))
                 .filter(cdp_update::is_public.eq(true))
                 .limit(i64::from(self.per_page + 1))
                 .order(cdp_update::id.desc())
-                .load(conn)?
+                .load(conn)?;
+
+            let previous = cdp_update::table
+                .select(cdp_update::id)
+                .filter(cdp_update::id.gt(self.since))
+                .filter(cdp_update::is_public.eq(true))
+                .order(cdp_update::id.asc())
+                .first(conn)
+                .optional()?
+                .map(|id: i64| format!("{}?since={id}", app_url.join("/").unwrap()));
+
+            (rows, previous)
         };
 
         rows.reverse();
@@ -48,15 +69,15 @@ impl ListInput {
             None
         };
 
-        let mut updates = vec![];
+        let mut items = vec![];
         for row in rows {
-            updates.push(row.into_update(app_url)?);
+            items.push(row.into_update(app_url)?);
         }
 
         Ok(Paged {
             next,
-            previous: None,
-            items: updates,
+            previous,
+            items,
         })
     }
 }

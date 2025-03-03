@@ -27,6 +27,6 @@ fn post_list(
             since,
             per_page,
         }
-        .fetch(&mut me.conn, &me.ud, me.is_admin, &app_url)?,
+            .fetch(&mut me.conn, &me.ud, me.ud.is_some(), &app_url)?,
     )
 }

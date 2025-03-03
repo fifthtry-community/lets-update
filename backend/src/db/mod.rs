@@ -24,7 +24,7 @@ pub struct DbUpdate {
 }
 
 impl DbUpdate {
-    fn into_update(self) -> ft_sdk::Result<backend::Update> {
+    fn into_update(self, app_url: &ft_sdk::AppUrl) -> ft_sdk::Result<backend::Update> {
         match self.content_type.as_str() {
             backend::TEXT_POST => {
                 #[derive(serde::Deserialize, Default)]
@@ -36,7 +36,7 @@ impl DbUpdate {
 
                 let tb = serde_json::from_str::<TB>(&self.content)?;
                 Ok(backend::Update {
-                    permalink: backend::urls::post(self.guid),
+                    permalink: app_url.join(backend::urls::post(self.guid))?,
                     title: tb.title,
                     body: tb.body,
                     links: serde_json::from_str(&self.links)?,

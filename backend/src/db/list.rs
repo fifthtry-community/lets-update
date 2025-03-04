@@ -22,7 +22,7 @@ impl ListInput {
         // logged in -> public posts and user's posts
 
         // for now assume we only have public posts
-        let (mut rows, previous) = if is_admin {
+        let (mut rows, previous_rows) = if is_admin {
             let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
                 .limit(i64::from(self.per_page + 1))
@@ -37,10 +37,7 @@ impl ListInput {
                 .limit(i64::from(self.per_page))
                 .load::<i64>(conn)?;
 
-            let previous = previous_rows.first()
-                .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()));
-
-            (rows, previous)
+            (rows, previous_rows)
         } else {
             let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
@@ -58,10 +55,7 @@ impl ListInput {
                 .limit(i64::from(self.per_page))
                 .load::<i64>(conn)?;
 
-            let previous = previous_rows.first()
-                .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()));
-
-            (rows, previous)
+            (rows, previous_rows)
         };
 
         let next = if rows.len() > self.per_page as usize {
@@ -70,6 +64,9 @@ impl ListInput {
         } else {
             None
         };
+
+        let previous = previous_rows.first()
+            .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()));
 
         let mut items = vec![];
         for row in rows {

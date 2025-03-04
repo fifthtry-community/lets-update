@@ -64,8 +64,6 @@ impl ListInput {
             (rows, previous)
         };
 
-        rows.reverse();
-
         let next = if rows.len() > self.per_page as usize {
             rows.pop()
                 .map(|u| format!("{}?since={id}", app_url.join("/").unwrap(), id = u.id))

@@ -22,19 +22,19 @@ impl ListInput {
         // logged in -> public posts and user's posts
 
         // for now assume we only have public posts
-        let (mut rows, previous_rows) = if is_admin {
+        let (mut rows, mut previous_rows) = if is_admin {
             let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
                 .limit(i64::from(self.per_page + 1))
-                .filter(cdp_update::id.lt(self.since))
+                .filter(cdp_update::id.le(self.since))
                 .order(cdp_update::id.desc())
                 .load(conn)?;
 
             let previous_rows = cdp_update::table
                 .select(cdp_update::id)
-                .filter(cdp_update::id.gt(self.since))
+                .filter(cdp_update::id.ge(self.since))
                 .order(cdp_update::id.asc())
-                .limit(i64::from(self.per_page))
+                .limit(i64::from(self.per_page + 2))
                 .load::<i64>(conn)?;
 
             (rows, previous_rows)
@@ -49,10 +49,10 @@ impl ListInput {
 
             let previous_rows = cdp_update::table
                 .select(cdp_update::id)
-                .filter(cdp_update::id.gt(self.since))
+                .filter(cdp_update::id.ge(self.since))
                 .filter(cdp_update::is_public.eq(true))
                 .order(cdp_update::id.asc())
-                .limit(i64::from(self.per_page))
+                .limit(i64::from(self.per_page + 2))
                 .load::<i64>(conn)?;
 
             (rows, previous_rows)
@@ -65,8 +65,17 @@ impl ListInput {
             None
         };
 
-        let previous = previous_rows.first()
-            .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()));
+        let previous = if previous_rows.is_empty() {
+            None
+        } else if previous_rows.len() <= (self.per_page + 1) as usize {
+            Some(app_url.join("/")?)
+        } else {
+            previous_rows.pop();
+            
+            previous_rows
+                .pop()
+                .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()))
+        };
 
         let mut items = vec![];
         for row in rows {

@@ -22,6 +22,20 @@ impl ListInput {
         // logged in -> public posts and user's posts
 
         // for now assume we only have public posts
+
+
+        // a note on pagination.
+        //
+        // for computing the next link, we fetch one extra row if the extra row is found, we know
+        // that we have to include the next link, and it should start with the id of that extra row.
+        // if the extra row is not found, we know that we have reached the end, and there are no
+        // more pages.
+        //
+        // for computing the previous row, we fetch two extra rows. we follow the one extra row
+        // logic to compute the page number. the one extra row is fetched to check if there is a
+        // page before even the previous page. if the previous page is the very first page, we do
+        // not have to include the `since` parameter in URL, so the URL is cleaner. by fetching one
+        // extra row, we are getting clean URL so its good tradeoff.
         let (mut rows, mut previous_rows) = if is_admin {
             let rows = cdp_update::table
                 .select(backend::db::DbUpdate::as_select())
@@ -70,8 +84,9 @@ impl ListInput {
         } else if previous_rows.len() <= (self.per_page + 1) as usize {
             Some(app_url.join("/")?)
         } else {
+            // remember, we fetched two extra rows, so we get rid of last row, and second last row
+            // is the first entry on the previous page.
             previous_rows.pop();
-            
             previous_rows
                 .pop()
                 .map(|id| format!("{}?since={id}", app_url.join("/").unwrap()))

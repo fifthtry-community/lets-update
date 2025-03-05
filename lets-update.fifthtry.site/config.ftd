@@ -1,13 +1,12 @@
 -- string site-name: $ds.site-name
 
-;; if this is set, only updates from this use will be shown on the updates page
-;; by default. if user-id is explicitly passed to post list api, that will be
-;; honored.
--- optional integer whose-posts-to-show:
 
-
+;; set this to 0 if you want everyone to be able to post. note: only people with
+;; confirmed email can post. this should have been an optional field, but due
+;; to a bug in fastn we are forced to make it mandatory with 0 as sentinel.
+-- integer who-can-post: $lets-auth.super-user-id
 
 
 ;; WARN: any variable that has value `ftd.app-url()` does not work here
 -- ftd.json:
-whose-posts-to-show: $lets-update.whose-posts-to-show
+who-can-post: $lets-update.who-can-post

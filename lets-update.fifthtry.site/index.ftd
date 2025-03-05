@@ -14,10 +14,13 @@ export: update-page
 -- import: lets-update.fifthtry.site/records as _
 export: update, link, quote, video, feed-item, paged-updates, paged-feed
 
+-- import: lets-update.fifthtry.site/config as _
+export: site-name, whose-posts-to-show
+
 -- optional string since:
 $processor$: pr.request-data
 
--- string site-name: $ds.site-name
+
 
 
 -- lets-update.paged-updates page:

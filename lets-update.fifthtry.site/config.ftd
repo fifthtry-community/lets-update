@@ -1,0 +1,13 @@
+-- string site-name: $ds.site-name
+
+;; if this is set, only updates from this use will be shown on the updates page
+;; by default. if user-id is explicitly passed to post list api, that will be
+;; honored.
+-- optional integer whose-posts-to-show:
+
+
+
+
+;; WARN: any variable that has value `ftd.app-url()` does not work here
+-- ftd.json:
+whose-posts-to-show: $lets-update.whose-posts-to-show

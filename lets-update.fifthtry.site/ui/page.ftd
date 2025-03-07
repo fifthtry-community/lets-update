@@ -14,31 +14,42 @@ string feed-url: $ftd.app-url(path=/feed/)
 fastn-badge: true
 
 	-- ds.section-row:
-	spacing: $ds.spaces.horizontal-gap.medium
-    inset: $ds.spaces.inset-square.medium
-    align-content: top-left
+	outer-background.solid: $ds.colors.background.step-1
+    inset: $ds.spaces.inset-square.large
+    spacing: $ds.spaces.horizontal-gap.medium
+    align-content: left
+
+        -- ds.column:
+
+            -- ds.row:
+
+            -- heading-tab: My Updates
+            ;; hiding the feed tab for now
+            /underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
+            link: $update-page.updates-url
+
+            ;; hiding the feed tab for now
+            /-- ds.heading-small: |
+            if: { update-page.viewer-is-owner }
+
+            ;; hiding the feed tab for now
+            /-- heading-tab: Feed
+            if: { update-page.viewer-is-owner }
+            link: $update-page.feed-url
+            underline: $update-page.feed-page-is-open
+
+            -- end: ds.row
+
+            -- ds.column:
+            spacing: $ds.spaces.horizontal-gap.medium
+            content: $update-page.content
+            -- end: ds.column
+
+        -- end: ds.column
 
 
-        -- heading-tab: My Updates
-        ;; hiding the feed tab for now
-        /underline if { update-page.viewer-is-owner && !update-page.feed-page-is-open }: true
-        link: $update-page.updates-url
+    -- end: ds.section-row
 
-        ;; hiding the feed tab for now
-        /-- ds.heading-small: |
-        if: { update-page.viewer-is-owner }
-
-        ;; hiding the feed tab for now
-        /-- heading-tab: Feed
-        if: { update-page.viewer-is-owner }
-        link: $update-page.feed-url
-        underline: $update-page.feed-page-is-open
-
-
-	-- end: ds.section-row
-
-	-- ds.section-column:
-	content: $update-page.content
 
 -- end: ds.site-page
 

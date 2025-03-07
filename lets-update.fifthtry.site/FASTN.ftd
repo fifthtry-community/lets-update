@@ -5,6 +5,7 @@ system: lets-update
 system-is-confidential: false
 
 -- fastn.dependency: design-system.fifthtry.site
+provided-via: lets-update.fifthtry.site/ds
 -- fastn.dependency: lets-auth.fifthtry.site
 -- fastn.dependency: lets-network.fifthtry.site
 

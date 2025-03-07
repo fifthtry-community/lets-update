@@ -48,17 +48,15 @@ for: update in $self-page.page.items
 caption lets-update.update update:
 optional lets-network.contact from:
 
--- ds.section-column:
-
-    -- ftd.column:
-    border-width.px: 2
-    border-radius.px: 8
-    border-color: $ds.colors.border
+-- ds.column:
+    background.solid: $ds.colors.background.base
     width: fill-container
-    padding.px: 24
-    spacing.fixed.px: 10
+    align-content: left
 
-        -- ds.heading-small: $show-update.update.title
+         -- show-from: $show-update.from
+        if: { show-update.from != NULL }
+
+        -- ds.heading-tiny: $show-update.update.title
         if: { show-update.update.title != NULL }
 
         -- ds.copy-regular:
@@ -66,12 +64,8 @@ optional lets-network.contact from:
 
         $show-update.update.body
 
-        -- show-from: $show-update.from
-        if: { show-update.from != NULL }
 
-    -- end: ftd.column
-
--- end: ds.section-column
+-- end: ds.column
 
 -- end: show-update
 
@@ -79,21 +73,15 @@ optional lets-network.contact from:
 -- component show-from:
 caption lets-network.contact from:
 
--- ftd.row:
-border-width.px: 2
-border-radius.px: 8
-border-color: $ds.colors.border
-width: hug-content
-align-self: end
-padding.px: 24
-spacing.fixed.px: 10
-link: $show-from.from.url
+-- ds.row:
+align-content: left
 
-    -- ds.heading-tiny: $show-from.from.name
+    -- ds.copy-regular: $show-from.from.name
 
-    -- ds.copy-regular: $show-from.from.domain
+    -- ds.copy-small: $show-from.from.domain
+    link: $show-from.from.url
 
--- end: ftd.row
+-- end: ds.row
 
 -- end: show-from
 
@@ -107,23 +95,25 @@ value: true
 -- component compose-form:
 module actions: actions
 
--- ds.section-row:
+-- ds.row:
+background.solid: $ds.colors.background.base
 
-    -- ds.column:
+        -- ds.column:
+        align-content: right
 
-        -- ds.form-field: Create A New Update
+        -- ds.form-field: Update
         placeholder: Write your update here
         $field: $title
 
-        -- ds.checkbox: Update Is Public
+        -- ds.checkbox: Public
         $is-checked: $is-public.value
         size: small
 
-    -- end: ds.column
+         -- ds.primary-button: Post
+        $on-click$: $compose-form.actions.create-text-post($title=$title, $is_public=$is-public)
 
-    -- ds.primary-button: Save Update
-    $on-click$: $compose-form.actions.create-text-post($title=$title, $is_public=$is-public)
+        -- end: ds.column
 
--- end: ds.section-row
+-- end: ds.row
 
 -- end: compose-form

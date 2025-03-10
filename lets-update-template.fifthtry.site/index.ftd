@@ -2,7 +2,8 @@
 
 -- ds.heading-large: My Site
 
--- ds.heading-medium: My Updates
+-- ds.copy-regular: checkout my updates
 link: $ftd.app-url(path=/, app=lets-update)
+color: $ds.colors.cta-primary.base
 
 -- end: ds.site-page

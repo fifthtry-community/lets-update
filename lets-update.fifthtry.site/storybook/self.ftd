@@ -1,4 +1,6 @@
 -- import: lets-update.fifthtry.site/actions/dummy
+-- import: lets-update.fifthtry.site as lets-update
+
 
 -- lets-update.self-page:
 viewer-is-owner: true
@@ -11,6 +13,9 @@ actions: dummy
 
 -- lets-update.paged-updates page:
 items: $updates
+
+
+
 
 -- lets-update.update list updates:
 

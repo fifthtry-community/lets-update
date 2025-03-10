@@ -1,12 +1,11 @@
 #[ft_sdk::form]
 pub fn create_text_post(
     mut me: backend::MySelf,
-    ft_sdk::Json(data): ft_sdk::Json<TextPost>,
+    ft_sdk::Json(mut data): ft_sdk::Json<TextPost>,
     app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::form::Result {
-    if data.title().unwrap_or("").is_empty() && data.body().unwrap_or("").is_empty() {
-        return Err(ft_sdk::single_error("title", "Either title or body must be provided").into());
-    }
+    data.check()?;
+
     if !me.ud.verified_email {
         return Err(ft_sdk::single_error("title", "Email must be verified to post.").into());
     }
@@ -23,12 +22,20 @@ struct TextPost {
 }
 
 impl TextPost {
-    fn title(&self) -> Option<&str> {
-        self.title.as_ref().map(AsRef::as_ref)
-    }
+    fn check(&mut self) -> ft_sdk::Result<()> {
+        if self.body.as_ref().map(|v| v.trim().is_empty()).unwrap_or(true) {
+            self.body = None;
+        }
 
-    fn body(&self) -> Option<&str> {
-        self.body.as_ref().map(AsRef::as_ref)
+        if self.title.as_ref().map(|v| v.trim().is_empty()).unwrap_or(true) {
+            self.title = None;
+        }
+
+        if self.title.is_none() && self.body.is_none() {
+            return Err(ft_sdk::single_error("title", "Either title or body must be provided").into());
+        }
+
+        Ok(())
     }
 
     fn save(self, conn: &mut ft_sdk::Connection, user_id: i64) -> ft_sdk::Result<String> {

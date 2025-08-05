@@ -20,3 +20,6 @@ lets-update.fifthtry.site/backend.wasm
 .fastn
 
 .idea/
+
+.DS_Store
+*.wasm

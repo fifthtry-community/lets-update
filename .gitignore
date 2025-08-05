@@ -22,3 +22,4 @@ lets-update.fifthtry.site/backend.wasm
 .idea/
 
 .DS_Store
+*.wasm
